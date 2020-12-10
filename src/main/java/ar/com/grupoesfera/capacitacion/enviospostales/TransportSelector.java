@@ -4,13 +4,15 @@ import java.util.List;
 
 public class TransportSelector {
     public Transport selectTransport(List<Package> packageList){
-        int weight = 0;
+        double weight = 0;
 
         for (Package pkg: packageList) {
             weight += pkg.getWeight();
         }
 
-        if(weight < 5){
+        if(packageList.size() == 1 && weight < 0.5){
+            return Transport.DRONE;
+        }else if(weight < 5){
             return Transport.BICYCLE;
         }else if(weight < 10){
             return Transport.CAR;

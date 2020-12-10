@@ -3,7 +3,8 @@ language: java
 jobs:
   include:
     - stage: compile
-      script: mvn compile
+      script: mvn -Dcomision=10 compile
     - stage: test
-      script: mvn test
-    - stage: deploy
+      script: mvn -Dcomision=10 test
+    - stage: package
+      script: mvn -Dcomision=10 package

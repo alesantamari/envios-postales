@@ -44,6 +44,29 @@ public class DispatcherTest {
         entoncesSeEnviaEnConCostoDe(Transport.VAN, 187.0, dispatch);
     }
 
+    @Test
+    public void testearReporteDeEnvios(){
+        Dispatch dispatch = dadoQueTenemosUnEnvioConCuatroPaquetesYCuatroKilos();
+        cuandoDespachamosElEnvio(dispatch);
+        Dispatch dispatch2 = dadoQueTenemosUnEnvioConDieciseisPaquetesYDieciseisKilos();
+        cuandoDespachamosElEnvio(dispatch2);
+        List<String> reporteObtenido = cuandoSolicitamosUnReporte();
+        entoncesObtenemosElReportecorrecto(reporteObtenido);
+    }
+
+    private void entoncesObtenemosElReportecorrecto(List<String> reporteObtenido) {
+        List<String> reporteEsperado = new LinkedList<>();
+
+        reporteEsperado.add("Dispatch{weight=4.0, packagesQty=4, transport=BICYCLE, sentDate=2020-12-10}");
+        reporteEsperado.add("Dispatch{weight=16.0, packagesQty=16, transport=VAN, sentDate=2020-12-10}");
+
+        assertThat(reporteObtenido).isEqualTo(reporteEsperado);
+    }
+
+    private List<String> cuandoSolicitamosUnReporte() {
+        return dispatcher.getSentDispatches();
+    }
+
     private Dispatch dadoQueTenemosUnEnvioConDieciseisPaquetesYDieciseisKilos() {
         List<Package> packageList = new LinkedList<>();
         for(int i = 0; i<16; i++) {
